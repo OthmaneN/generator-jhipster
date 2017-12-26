@@ -167,6 +167,11 @@ public class <%= entityClass %> implements Serializable {
         if (fieldType === 'byte[]') { _%>
     @Lob
         <%_ }
+
+        if (fieldType === 'Location') { _%>
+    @Embedded
+        <%_ }
+
         if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
     @Column(name = "<%-fieldNameAsDatabaseColumn %>"<% if (required) { %>, nullable = false<% } %>)
         <%_ } else if (fieldType === 'BigDecimal') { _%>

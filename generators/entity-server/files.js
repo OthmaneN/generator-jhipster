@@ -68,6 +68,10 @@ const serverFiles = {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {
+                    file: 'package/domain/Location.java',
+                    renameTo: generator => `${generator.packageFolder}/domain/Location.java`
+                },
+                {
                     file: 'package/domain/_Entity.java',
                     renameTo: generator => `${generator.packageFolder}/domain/${generator.entityClass}.java`
                 },

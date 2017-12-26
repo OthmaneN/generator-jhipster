@@ -457,7 +457,7 @@ module.exports = class extends BaseGenerator {
 
                     const nonEnumType = [
                         'String', 'Integer', 'Long', 'Float', 'Double', 'BigDecimal',
-                        'LocalDate', 'Instant', 'ZonedDateTime', 'Boolean', 'byte[]', 'ByteBuffer'
+                        'LocalDate', 'Instant', 'ZonedDateTime', 'Boolean', 'byte[]', 'ByteBuffer', 'Location'
                     ].includes(fieldType);
                     if ((['sql', 'mongodb', 'couchbase'].includes(context.databaseType)) && !nonEnumType) {
                         field.fieldIsEnum = true;

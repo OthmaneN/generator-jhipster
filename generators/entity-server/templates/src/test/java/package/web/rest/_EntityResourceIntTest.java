@@ -24,6 +24,7 @@ import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.config.SecurityBeanOverrideConfiguration;
 <% } %>
 import <%=packageName%>.domain.<%= entityClass %>;
+import <%=packageName%>.domain.Location;
 <%_ for (idx in relationships) { // import entities in required relationships
         const relationshipValidate = relationships[idx].relationshipValidate;
         const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
@@ -200,6 +201,10 @@ _%>
 
     private static final Long <%=defaultValueName %> = <%= defaultValue %>L;
     private static final Long <%=updatedValueName %> = <%= updatedValue %>L;
+    <%_ } else if (fieldType === 'Location') { _%>
+
+    private static final Location <%=defaultValueName %> = new Location(1D,2D);
+    private static final Location <%=updatedValueName %> = new Location(3D,4D);
     <%_ } else if (fieldType === 'Float') { _%>
 
     private static final <%=fieldType %> <%=defaultValueName %> = <%= defaultValue %>F;
