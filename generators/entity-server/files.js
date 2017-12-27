@@ -72,6 +72,10 @@ const serverFiles = {
                     renameTo: generator => `${generator.packageFolder}/domain/${generator.entityClass}.java`
                 },
                 {
+                    file: 'package/domain/_EntityId.java',
+                    renameTo: generator => `${generator.packageFolder}/domain/${generator.entityClass}Id.java`
+                },
+                {
                     file: 'package/repository/_EntityRepository.java',
                     renameTo: generator => `${generator.packageFolder}/repository/${generator.entityClass}Repository.java`
                 },

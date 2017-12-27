@@ -52,6 +52,11 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column><% for (idx in fields) {
             let nullable = true;
+            let primaryKey = false;
+            if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primarykey')) {
+                primaryKey = true;
+                nullable = false;
+            }
             if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('required')) {
                 nullable = false;
             }
@@ -103,14 +108,14 @@
             %>
             <column name="<%=columnName %>" type="<%=columnType %>">
                 <%_ if (unique) { _%>
-                <constraints nullable="<%= nullable %>" unique="true" />
+                <constraints nullable="<%= nullable %>" primaryKey="<%= primaryKey %>" unique="true" />
                 <%_ } else { _%>
-                <constraints nullable="<%= nullable %>" />
+                <constraints nullable="<%= nullable %>" primaryKey="<%= primaryKey %>" />
                 <%_ } _%>
             </column>
             <%_ if (fieldType === 'byte[]' && fieldTypeBlobContent !== 'text') { _%>
             <column name="<%=columnName %>_content_type" type="varchar(255)">
-                <constraints nullable="<%= nullable %>" />
+                <constraints nullable="<%= nullable %>" primaryKey="<%= primaryKey %>"/>
             </column>
             <%_ }  _%>
             <%_ } _%><% for (idx in relationships) {

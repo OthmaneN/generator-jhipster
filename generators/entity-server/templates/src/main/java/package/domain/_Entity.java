@@ -93,6 +93,22 @@ import static org.springframework.data.couchbase.core.mapping.id.GenerationStrat
 <%_ if (databaseType === 'sql') { _%>
 @Entity
 @Table(name = "<%= entityTableName %>")
+<%_
+	let primarykeys = false;
+	for (idx in fields) {
+		const fieldValidate = fields[idx].fieldValidate;
+		const fieldValidateRules = fields[idx].fieldValidateRules;
+	    if (fieldValidate === true && fieldValidateRules.includes('primarykey')) {
+	    	primarykeys = true;
+	    	break;
+	    }	
+	} 
+	if (primarykeys === true) {
+_%>
+@IdClass(<%= entityClass %>Id.class)
+<%_
+	}
+_%>    
 <%_     if (enableHibernateCache) {
             if (cacheProvider === 'infinispan') { _%>
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
