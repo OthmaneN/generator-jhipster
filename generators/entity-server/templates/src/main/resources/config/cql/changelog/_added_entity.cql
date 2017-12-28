@@ -17,6 +17,9 @@
  limitations under the License.
 -%>
 
+<%
+    let primaryKeys = [];
+%>
 CREATE TABLE IF NOT EXISTS <%= entityInstance %> (
     id uuid,<% for (idx in fields) {
         const fieldType = fields[idx].fieldType;
@@ -36,6 +39,9 @@ CREATE TABLE IF NOT EXISTS <%= entityInstance %> (
     <%= fieldName %> tuple<timestamp,varchar>,<% } else if (fieldType === 'Boolean') { %>
     <%= fieldName %> boolean,<% } else if (fieldType === 'ByteBuffer') { %>
     <%= fieldName %> blob,<% if (fieldTypeBlobContent !== 'text') { %>
-    <%= fieldNameUnderscored %>_content_type text,<% } } } %>
-    PRIMARY KEY(id)
+    <%= fieldNameUnderscored %>_content_type text,<% } }
+    if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primarykey')) {
+    primaryKeys.push(fields[idx]);
+    }}%>
+    PRIMARY KEY(<%_ for (idx in primaryKeys) { _%><%= primaryKeys[idx].fieldName %>,<%_ } _%> id)
 );
