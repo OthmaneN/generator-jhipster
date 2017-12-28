@@ -31,14 +31,14 @@ fields.forEach(field => {
     const fieldType = field.fieldType;
     const fieldName = field.fieldName;
     let tsType;
-    if (field.fieldIsEnum) {
+    if (field.fieldIsEnum || fieldType === 'Location') {
         tsType = fieldType;
     } else if (fieldType === 'Boolean') {
         tsType = 'boolean';
         defaultVariablesValues[fieldName] = 'this.' + fieldName + ' = false;';
     } else if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal'].includes(fieldType)) {
         tsType = 'number';
-    } else if (fieldType === 'String'  || fieldType === 'UUID') {
+    } else if (fieldType === 'String' || fieldType === 'UUID') {
         tsType = 'string';
     } else { //(fieldType === 'byte[]' || fieldType === 'ByteBuffer') && fieldTypeBlobContent === 'any' || (fieldType === 'byte[]' || fieldType === 'ByteBuffer') && fieldTypeBlobContent === 'image' || fieldType === 'LocalDate'
         tsType = 'any';
@@ -46,7 +46,7 @@ fields.forEach(field => {
             variables[fieldName + 'ContentType'] = fieldName + 'ContentType?: ' + 'string';
         }
     }
-    variables[fieldName] = fieldName + '?: ' + tsType;
+    variables[fieldName] = fieldName + ((fieldType === 'Location') ?': ':'?: ') + tsType + ((fieldType === 'Location') ?' = new Location()':'');
 });
 relationships.forEach(relationship => {
     let fieldType;
@@ -77,7 +77,7 @@ relationships.forEach(relationship => {
     variables[fieldName] = fieldName + '?: ' + fieldType;
 });
 _%>
-import { BaseEntity<% if (hasUserRelationship) { %>, User<% } %> } from './../../shared';
+import {Location, BaseEntity<% if (hasUserRelationship) { %>, User<% } %> } from './../../shared';
 
 <%_ const enumsAlreadyDeclared = [];
 fields.forEach(field => {

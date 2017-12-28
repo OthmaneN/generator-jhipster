@@ -542,6 +542,10 @@ function askForField(done) {
                 {
                     value: 'byte[]',
                     name: '[BETA] Blob'
+                },
+                {
+                    value: 'Location',
+                    name: 'Location'
                 }
             ],
             default: 0

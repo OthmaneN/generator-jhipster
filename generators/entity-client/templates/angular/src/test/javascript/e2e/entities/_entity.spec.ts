@@ -128,6 +128,12 @@ describe('<%= entityClass %> e2e test', () => {
         <%_ } else if(fieldType === 'UUID'){ _%>
         <%= entityInstance %>DialogPage.set<%= fieldNameCapitalized %>Input('64c99148-3908-465d-8c4a-e510e3ade974');
         expect(<%= entityInstance %>DialogPage.get<%= fieldNameCapitalized %>Input()).toMatch('64c99148-3908-465d-8c4a-e510e3ade974');
+        <%_ }else if(fieldType === 'Location'){ _%>
+        <%= entityInstance %>DialogPage.set<%= fieldNameCapitalized %>LatitudeInput(-1);
+        expect(<%= entityInstance %>DialogPage.get<%= fieldNameCapitalized %>LatitudeInput()).toMatch(-1);
+
+        <%= entityInstance %>DialogPage.set<%= fieldNameCapitalized %>LongitudeInput(5);
+        expect(<%= entityInstance %>DialogPage.get<%= fieldNameCapitalized %>LongitudeInput()).toMatch(5);
         <%_ } else { _%>
         <%= entityInstance %>DialogPage.set<%= fieldNameCapitalized %>Input('<%= fieldName %>');
         expect(<%= entityInstance %>DialogPage.get<%= fieldNameCapitalized %>Input()).toMatch('<%= fieldName %>');
@@ -182,6 +188,9 @@ export class <%= entityClass %>DialogPage {
     <%= fieldName %>Input = element(by.css('textarea#field_<%= fieldName %>'));
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
     <%= fieldName %>Input = element(by.css('input#file_<%= fieldName %>'));
+    <%_ }else if (fieldType === 'Location') { _%>
+    <%= fieldName %>LatitudeInput = element(by.css('input#field_<%= fieldName %>'_latitude));
+    <%= fieldName %>LongitudeInput = element(by.css('input#field_<%= fieldName %>'_longitude));
     <%_ } else { _%>
     <%= fieldName %>Input = element(by.css('input#field_<%= fieldName %>'));
     <%_ } _%>
@@ -235,6 +244,22 @@ export class <%= entityClass %>DialogPage {
         return this.<%= fieldName %>Input.getAttribute('value');
     }
 
+    <%_ } else if (fieldType === 'Location') { _%>
+    set<%= fieldNameCapitalized %>LatitudeInput = function(<%= fieldName %>Latitude) {
+    this.<%= fieldName %>>LatitudeInput.sendKeys(<%= fieldName %>Latitude);
+    }
+
+    get<%= fieldNameCapitalized %>LatitudeInput = function() {
+    return this.<%= fieldName %>LatitudeInput.getAttribute('value');
+    }
+
+    set<%= fieldNameCapitalized %>LongitudeInput = function(<%= fieldName %>Longitude) {
+    this.<%= fieldName %>>LongitudeInput.sendKeys(<%= fieldName %>Longitude);
+    }
+
+    get<%= fieldNameCapitalized %>LongitudeInput = function() {
+    return this.<%= fieldName %>LongitudeInput.getAttribute('value');
+    }
     <%_ } else { _%>
     set<%= fieldNameCapitalized %>Input = function(<%= fieldName %>) {
         this.<%= fieldName %>Input.sendKeys(<%= fieldName %>);

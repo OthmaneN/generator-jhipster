@@ -383,6 +383,7 @@ const files = {
                 'shared/model/_response-wrapper.model.ts',
                 'shared/model/_request-util.ts',
                 'shared/model/_base-entity.ts',
+                'shared/model/location.ts',
                 'shared/user/_account.model.ts',
                 // login
                 'shared/login/_login.service.ts',

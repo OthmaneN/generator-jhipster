@@ -42,7 +42,7 @@ _%>
             let fieldInputType = 'text';
             let ngModelOption = '';
             const translationKey = keyPrefix + fieldName;
-            if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal'].includes(fieldType)) {
+            if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal', 'Location'].includes(fieldType)) {
                 fieldInputType = 'number';
             } else if (fieldType === 'LocalDate') {
                 fieldInputType = 'date';
@@ -55,7 +55,9 @@ _%>
             }
         _%>
         <div class="form-group">
+            <%_ if (fieldType !== 'Location') { _%>
             <label class="form-control-label" jhiTranslate="<%= translationKey %>" for="field_<%= fieldName %>"><%= fieldNameHumanized %></label>
+            <%_ } _%>
             <%_ if (fields[idx].fieldIsEnum) { _%>
             <select class="form-control" name="<%= fieldName %>" [(ngModel)]="<%= entityInstance %>.<%= fieldName %>" id="field_<%= fieldName %>" <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('required')) { %> required<% } %>>
             <%_ const enumPrefix = angularAppName + '.'+ fieldType;
@@ -102,6 +104,16 @@ _%>
             <div class="d-flex">
                 <input id="field_<%= fieldName %>" type="datetime-local" class="form-control" name="<%= fieldName %>" [(ngModel)]="<%= entityInstance %>.<%= fieldName %>"
                 <%- include ng_validators %>/>
+            </div>
+            <%_ } else if (fieldType === 'Location') { _%>
+            <div class="input-group">
+                <label class="form-control-label" jhiTranslate="<%= translationKey %>" for="field_<%= fieldName %>_latitude"><%= fieldNameHumanized %> latitude</label>
+                <input id="field_<%= fieldName %>_latitude" type="number" class="form-control" name="<%= fieldName %>_latitude" [(ngModel)]="<%= entityInstance %>.<%= fieldName %>.latitude"
+                    <%- include ng_validators %>/>
+
+                <label class="form-control-label" jhiTranslate="<%= translationKey %>" for="field_<%= fieldName %>_longitude"><%= fieldNameHumanized %> longitude</label>
+                <input id="field_<%= fieldName %>_longitude" type="number" class="form-control" name="<%= fieldName %>_longitude" [(ngModel)]="<%= entityInstance %>.<%= fieldName %>.longitude"
+                    <%- include ng_validators %>/>
             </div>
             <%_ } else if(fieldTypeBlobContent === 'text') { _%>
             <textarea class="form-control" name="<%= fieldName %>" id="field_<%= fieldName %>"
