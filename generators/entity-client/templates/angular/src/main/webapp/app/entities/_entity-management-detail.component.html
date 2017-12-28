@@ -42,7 +42,8 @@
             <%_ } else if (fieldType === 'LocalDate') { _%>
             <span>{{<%=entityInstance %>.<%= fieldName %> | date:'mediumDate'}}</span>
             <%_ } else if (fieldType === 'Location') { _%>
-            <span>{{<%=entityInstance %>.<%=fieldName%>.latitude}},{{<%=entityInstance %>.<%=fieldName%>.longitude}}</span>
+            <span><b>Latitude: </b>{{<%=entityInstance %>.<%=fieldName%>.latitude}}, <b>Longitude: </b>{{<%=entityInstance %>.<%=fieldName%>.longitude}}</span>
+            <jhi-map-component [lat]="<%=entityInstance %>.<%=fieldName%>.latitude" [lng]="<%=entityInstance %>.<%=fieldName%>.longitude"></jhi-map-component>
             <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'any') { _%>
             <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
                 <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)" jhiTranslate="entity.action.open">open</a>

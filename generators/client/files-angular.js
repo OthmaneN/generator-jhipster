@@ -169,6 +169,9 @@ const files = {
                 'layouts/profiles/_profile-info.model.ts',
                 'layouts/main/_main.component.ts',
                 'layouts/main/_main.component.html',
+                'layouts/map/map.component.css',
+                'layouts/map/map.component.html',
+                'layouts/map/map.component.ts',
                 { file: 'layouts/navbar/_navbar.component.ts', method: 'processJs' },
                 { file: 'layouts/navbar/_navbar.component.html', method: 'processHtml' },
                 'layouts/navbar/_navbar.route.ts',
@@ -378,6 +381,7 @@ const files = {
                 'shared/_shared-libs.module.ts',
                 'shared/_shared-common.module.ts',
                 'shared/constants/_error.constants.ts',
+                'shared/constants/map.constants.ts',
                 'shared/constants/_pagination.constants.ts',
                 // models
                 'shared/model/_response-wrapper.model.ts',

@@ -18,6 +18,12 @@
 -%>
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {AgmCoreModule} from '@agm/core';
+import {FormsModule} from '@angular/forms';
+import {MapComponent} from '../../layouts/map/map.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {API_KEY} from '../../shared/constants/map.constants';
 
 import { <%= angularXAppName %>SharedModule } from '../../shared';
 <%_ Object.keys(differentRelationships).forEach(key => {
@@ -52,7 +58,13 @@ const ENTITY_STATES = [
               if (key === 'User') { _%>
         <%= angularXAppName %>AdminModule,
         <%_ }}); _%>
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        BrowserModule,
+        CommonModule,
+        FormsModule,
+        AgmCoreModule.forRoot({
+        apiKey: API_KEY
+        })
     ],
     declarations: [
         <%= entityAngularName %>Component,
@@ -61,6 +73,7 @@ const ENTITY_STATES = [
         <%= entityAngularName %>DeleteDialogComponent,
         <%= entityAngularName %>PopupComponent,
         <%= entityAngularName %>DeletePopupComponent,
+        MapComponent
     ],
     entryComponents: [
         <%= entityAngularName %>Component,
@@ -69,6 +82,7 @@ const ENTITY_STATES = [
         <%= entityAngularName %>DeleteDialogComponent,
         <%= entityAngularName %>DeletePopupComponent,
     ],
+    bootstrap: [ MapComponent ],
     providers: [
         <%= entityAngularName %>Service,
         <%= entityAngularName %>PopupService,
