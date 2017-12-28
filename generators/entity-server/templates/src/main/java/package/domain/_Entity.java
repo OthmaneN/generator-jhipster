@@ -44,8 +44,8 @@ import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 import org.springframework.data.couchbase.core.mapping.id.IdPrefix;
 <%_ } if (databaseType === 'sql') { _%>
-
 import javax.persistence.*;
+import org.hibernate.annotations.NaturalId;
 <%_ } if (validation) { _%>
 import javax.validation.constraints.*;
 <%_ } _%>
@@ -101,14 +101,14 @@ import static org.springframework.data.couchbase.core.mapping.id.GenerationStrat
 	    if (fieldValidate === true && fieldValidateRules.includes('primarykey')) {
 	    	primarykeys = true;
 	    	break;
-	    }	
-	} 
+	    }
+	}
 	if (primarykeys === true) {
 _%>
-@IdClass(<%= entityClass %>Id.class)
+/* @IdClass(<%= entityClass %>Id.class) */
 <%_
 	}
-_%>    
+_%>
 <%_     if (enableHibernateCache) {
             if (cacheProvider === 'infinispan') { _%>
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -172,7 +172,14 @@ public class <%= entityClass %> implements Serializable {
             required = true;
         } _%>
     <%- include ../common/field_validators -%>
-    <%_ } _%>
+    <%_
+        if (databaseType === 'sql' && fieldValidate === true && fieldValidateRules.includes('primarykey')) {
+    _%>
+    @NaturalId(mutable=true)
+    <%_
+        }
+    }
+    _%>
     <%_ if (typeof fields[idx].javadoc != 'undefined') { _%>
     @ApiModelProperty(value = "<%- formatAsApiDescription(fields[idx].javadoc) %>"<% if (required) { %>, required = true<% } %>)
     <%_ } _%>

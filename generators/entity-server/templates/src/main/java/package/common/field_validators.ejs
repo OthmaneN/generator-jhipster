@@ -66,9 +66,6 @@ if (field.fieldValidate === true) {
     if (rules.includes('pattern')) {
         validators.push('@Pattern(regexp = "' + field.fieldValidateRulesPatternJava  + '")');
     }
-    if (rules.includes('primarykey')) {
-        validators.push('@Id');
-    }
     result =  validators.join('\n    ');
     result += '\n';
 } -%>

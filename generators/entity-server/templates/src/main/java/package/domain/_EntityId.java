@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * A <%= entityClass %> Id.
  */
-
 public class <%= entityClass %>Id implements Serializable {
 
 	private Long id;
@@ -14,57 +13,57 @@ public class <%= entityClass %>Id implements Serializable {
 		for (idx in fields) {
 				const fieldValidate = fields[idx].fieldValidate;
 				const fieldValidateRules = fields[idx].fieldValidateRules;
-			    if (fieldValidate === true && fieldValidateRules.includes('primarykey')) {	
+			    if (fieldValidate === true && fieldValidateRules.includes('primarykey')) {
 			    	fieldsPK.push(fields[idx])
-	_%>	
+	_%>
 	private <%= fields[idx].fieldType %> <%= fields[idx].fieldName %>;
 	<%_
 			    }
-		}	    
+		}
 	_%>
 
 	<%_ if (fieldsPK.length !== 0) { _%>
 	public <%= entityClass %>Id() {
-		
+
 	}
 	<%_
 	}
-	_%>		
-	
-	public <%= entityClass %>Id(Long Id,  <%_ for (idx in fieldsPK) { _%><%= fieldsPK[idx].fieldType %> <%= fieldsPK[idx].fieldName %><%_ if (idx < fieldsPK.length-1) { _%> <%= ", " %> <%_ } _%><%_ } _%>) {
+	_%>
+
+	public <%= entityClass %>Id(Long Id <%_ for (idx in fieldsPK) { _%> , <%= fieldsPK[idx].fieldType %> <%= fieldsPK[idx].fieldName %> <%_ } _%>) {
 		this.id = id;
 	<%_ for (idx in fieldsPK) {
 		const fieldName = fieldsPK[idx].fieldName;
-	_%>	
-		this.<%= fieldName %> = <%= fieldName %>; 
+	_%>
+		this.<%= fieldName %> = <%= fieldName %>;
 	<%_
 	}
-	_%>		
+	_%>
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	<%_ for (idx in fieldsPK) {
 		const fieldType = fieldsPK[idx].fieldType;
 		const fieldName = fieldsPK[idx].fieldName;
 		const fieldInJavaBeanMethod = fieldsPK[idx].fieldInJavaBeanMethod;
-	_%>	
+	_%>
 	public <%= fieldType %> get<%= fieldInJavaBeanMethod %>() {
 		return <%= fieldName %>;
 	}
 	<%_
 	}
-	_%>	
-	
+	_%>
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				<%_ for (idx in fieldsPK) { 
-					const fieldName = fieldsPK[idx].fieldName; _%>	
+				<%_ for (idx in fieldsPK) {
+					const fieldName = fieldsPK[idx].fieldName; _%>
 				+ ((<%= fieldName %> == null) ? 0 : <%= fieldName %>.hashCode())
 				<%_
 				}
@@ -72,7 +71,7 @@ public class <%= entityClass %>Id implements Serializable {
 				<%=";"%>
 		return result;
 	}
-    
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -85,11 +84,11 @@ public class <%= entityClass %>Id implements Serializable {
 		<%_ for (idx in fieldsPK) {
 			const fieldType = fieldsPK[idx].fieldType;
 			const fieldName = fieldsPK[idx].fieldName;
-		_%>			
-		
+		_%>
+
 		if (id != other.id)
 			return false;
-		
+
 		if (<%= fieldName %> == null) {
 			if (other.<%= fieldName %> != null)
 				return false;
@@ -97,10 +96,10 @@ public class <%= entityClass %>Id implements Serializable {
 			return false;
 		<%_
 		}
-		_%>			
-		
+		_%>
+
 		return true;
 	}
-    
-	
+
+
 }
