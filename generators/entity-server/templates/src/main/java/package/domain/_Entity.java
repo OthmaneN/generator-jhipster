@@ -176,7 +176,12 @@ public class <%= entityClass %> implements Serializable {
     @Column(name = "<%-fieldNameAsDatabaseColumn %>"<% if (required) { %>, nullable = false<% } %>)
         <%_ } else if (fieldType === 'BigDecimal') { _%>
     @Column(name = "<%-fieldNameAsDatabaseColumn %>", precision=10, scale=2<% if (required) { %>, nullable = false<% } %>)
-        <%_ } else { _%>
+        <%_ } else if (fieldType === 'Location') { _%>
+    @AttributeOverrides({
+        @AttributeOverride(name = "latitude", column = @Column(name = "<%-fieldNameAsDatabaseColumn %>_latitude")),
+        @AttributeOverride(name = "longitude", column = @Column(name = "<%-fieldNameAsDatabaseColumn %>_longitude"))
+    })
+    <%_ } else { _%>
     @Column(name = "<%-fieldNameAsDatabaseColumn %>"<% if (fieldValidate === true) { %><% if (fieldValidateRules.includes('maxlength')) { %>, length = <%= fieldValidateRulesMaxlength %><% } %><% if (required) { %>, nullable = false<% } %><% } %>)
         <%_ }
     } _%>

@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {MouseEvent} from '@agm/core';
 
 @Component({
     selector: 'jhi-map-component',
@@ -6,6 +7,31 @@ import {Component, Input} from '@angular/core';
     styleUrls: ['map.component.css'],
 })
 export class MapComponent {
-    @Input() lat;
-    @Input() lng;
+    @Input() centerLat;
+    @Input() centerLng;
+    @Input() markerLat;
+    @Input() markerLng;
+    @Input() isEditingMap;
+
+    @Output() propagateNewCoordinatesEvent = new EventEmitter();
+
+    mapClicked($event: MouseEvent) {
+        this.updateMarkerCoords($event.coords)
+    }
+
+    dragEnded(param: {}, $event) {
+        this.updateMarkerCoords($event.coords)
+    }
+
+    updateMarkerCoords(coords) {
+        if (this.isEditingMap) {
+            this.markerLat = coords.lat;
+            this.markerLng = coords.lng;
+
+            this.propagateNewCoordinatesEvent.emit({
+                lat: this.markerLat,
+                lng: this.markerLng
+            })
+        }
+    }
 }

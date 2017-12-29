@@ -115,6 +115,10 @@ _%>
                 <input id="field_<%= fieldName %>_longitude" type="number" class="form-control" name="<%= fieldName %>_longitude" [(ngModel)]="<%= entityInstance %>.<%= fieldName %>.longitude"
                     <%- include ng_validators %>/>
             </div>
+            <jhi-map-component [centerLat]="<%=fieldName%>CenterLat" [centerLng]="<%=fieldName%>CenterLng"
+                               [markerLat]="<%= entityInstance %>.<%= fieldName %>.latitude" [markerLng]="<%= entityInstance %>.<%= fieldName %>.longitude"
+                               (propagateNewCoordinatesEvent)="new<%= fieldName %>CoordinatesCallback($event)"
+                               [isEditingMap]="true"></jhi-map-component>
             <%_ } else if(fieldTypeBlobContent === 'text') { _%>
             <textarea class="form-control" name="<%= fieldName %>" id="field_<%= fieldName %>"
                 [(ngModel)]="<%= entityInstance %>.<%= fieldName %>" <%- include ng_validators %>></textarea>

@@ -46,7 +46,7 @@ fields.forEach(field => {
             variables[fieldName + 'ContentType'] = fieldName + 'ContentType?: ' + 'string';
         }
     }
-    variables[fieldName] = fieldName + ((fieldType === 'Location') ?': ':'?: ') + tsType + ((fieldType === 'Location') ?' = new Location()':'');
+    variables[fieldName] = fieldName + ((fieldType === 'Location') ?': ':'?: ') + tsType + ((fieldType === 'Location') ?' = new Location(0, 0)':'');
 });
 relationships.forEach(relationship => {
     let fieldType;

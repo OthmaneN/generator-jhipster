@@ -24,6 +24,7 @@ import {FormsModule} from '@angular/forms';
 import {MapComponent} from '../../layouts/map/map.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {API_KEY} from '../../shared/constants/map.constants';
+import {MapModule} from '../../layouts/map/map.module';
 
 import { <%= angularXAppName %>SharedModule } from '../../shared';
 <%_ Object.keys(differentRelationships).forEach(key => {
@@ -64,7 +65,8 @@ const ENTITY_STATES = [
         FormsModule,
         AgmCoreModule.forRoot({
         apiKey: API_KEY
-        })
+        }),
+        MapModule
     ],
     declarations: [
         <%= entityAngularName %>Component,
@@ -73,7 +75,6 @@ const ENTITY_STATES = [
         <%= entityAngularName %>DeleteDialogComponent,
         <%= entityAngularName %>PopupComponent,
         <%= entityAngularName %>DeletePopupComponent,
-        MapComponent
     ],
     entryComponents: [
         <%= entityAngularName %>Component,
@@ -82,7 +83,7 @@ const ENTITY_STATES = [
         <%= entityAngularName %>DeleteDialogComponent,
         <%= entityAngularName %>DeletePopupComponent,
     ],
-    bootstrap: [ MapComponent ],
+    bootstrap: [MapComponent],
     providers: [
         <%= entityAngularName %>Service,
         <%= entityAngularName %>PopupService,

@@ -106,10 +106,10 @@
             }
             %>
             <%_ if (isLocation) { _%>
-            <column name="latitude" type="double">
+            <column name="<%=columnName %>_latitude" type="double">
             </column>
 
-            <column name="longitude" type="double">
+            <column name="<%=columnName %>_longitude" type="double">
             </column>
             <%_ } else { _%>
 

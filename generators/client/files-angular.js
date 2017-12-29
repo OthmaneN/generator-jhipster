@@ -172,6 +172,7 @@ const files = {
                 'layouts/map/map.component.css',
                 'layouts/map/map.component.html',
                 'layouts/map/map.component.ts',
+                'layouts/map/map.module.ts',
                 { file: 'layouts/navbar/_navbar.component.ts', method: 'processJs' },
                 { file: 'layouts/navbar/_navbar.component.html', method: 'processHtml' },
                 'layouts/navbar/_navbar.route.ts',

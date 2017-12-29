@@ -1,3 +1,3 @@
-<agm-map [latitude]="lat" [longitude]="lng">
-    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+<agm-map [latitude]="centerLat" [longitude]="centerLng" (mapClick)="mapClicked($event)" >
+    <agm-marker [latitude]="markerLat" [longitude]="markerLng" [markerDraggable]="isEditingMap" (dragEnd)="dragEnded({},$event)"></agm-marker>
 </agm-map>
