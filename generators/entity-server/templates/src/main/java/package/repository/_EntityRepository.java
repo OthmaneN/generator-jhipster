@@ -20,6 +20,7 @@ package <%=packageName%>.repository;
 
 import <%=packageName%>.domain.<%=entityClass%>;
 import org.springframework.stereotype.Repository;
+import com.mongodb.DuplicateKeyException;
 <% if (databaseType === 'cassandra') { %>
 import com.datastax.driver.core.*;
 import com.datastax.driver.mapping.Mapper;
@@ -149,7 +150,11 @@ public class <%= entityClass %>Repository {
         if (violations != null && !violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
-        mapper.save(<%= entityInstance %>);
+        try {
+            mapper.save(<%= entityInstance %>);
+        } catch (DuplicateKeyException e) {
+            log.error("Error: " + e);
+        }
         return <%= entityInstance %>;
     }
 
