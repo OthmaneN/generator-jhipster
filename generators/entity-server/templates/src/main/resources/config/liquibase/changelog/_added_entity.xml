@@ -159,7 +159,23 @@
         </createTable>
 
         <addPrimaryKey columnNames="<%= getPluralColumnName(name) %>_id, <%= getPluralColumnName(relationshipName) %>_id" tableName="<%= joinTableName %>"/>
-        <% } %><% } %>
+        <% } %><%_ }
+        let uniqueFields = [];
+        for (idx in fields) {
+            if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primarykey')) {
+                uniqueFields.push(fields[idx]);
+            }
+        }
+        if (uniqueFields !== []) {
+        _%>
+        <addUniqueConstraint columnNames="<% for (idx in uniqueFields) { %> <%=uniqueFields[idx].fieldName%> <% if(idx < uniqueFields.length-1) { %>, <% } }%>"
+                             constraintName="primary_keys_uniqueness"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             tableName="<%= entityTableName %>"/>
+        <%_ } _%>
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>
