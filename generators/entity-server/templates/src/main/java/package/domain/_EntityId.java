@@ -13,7 +13,7 @@ public class <%= entityClass %>Id implements Serializable {
 		for (idx in fields) {
 				const fieldValidate = fields[idx].fieldValidate;
 				const fieldValidateRules = fields[idx].fieldValidateRules;
-			    if (fieldValidate === true && fieldValidateRules.includes('primarykey')) {
+			    if (fieldValidate === true && fieldValidateRules.includes('primary key')) {
 			    	fieldsPK.push(fields[idx])
 	_%>
 	private <%= fields[idx].fieldType %> <%= fields[idx].fieldName %>;

@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS <%= entityInstance %> (
     <%= fieldName %> boolean,<% } else if (fieldType === 'ByteBuffer') { %>
     <%= fieldName %> blob,<% if (fieldTypeBlobContent !== 'text') { %>
     <%= fieldNameUnderscored %>_content_type text,<% } }
-    if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primarykey')) {
+    if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primary key')) {
     primaryKeys.push(fields[idx]);
     }}%>
     PRIMARY KEY(<%_ for (idx in primaryKeys) { _%><%= primaryKeys[idx].fieldName %>,<%_ } _%> id)

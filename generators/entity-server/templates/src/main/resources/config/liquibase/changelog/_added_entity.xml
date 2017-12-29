@@ -53,7 +53,7 @@
             </column><% for (idx in fields) {
             let nullable = true;
             let primaryKey = false;
-            if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primarykey')) {
+            if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primary key')) {
                 primaryKey = true;
                 nullable = false;
             }
@@ -162,7 +162,7 @@
         <% } %><%_ }
         let uniqueFields = [];
         for (idx in fields) {
-            if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primarykey')) {
+            if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primary key')) {
                 uniqueFields.push(fields[idx]);
             }
         }

@@ -99,7 +99,7 @@ import static org.springframework.data.couchbase.core.mapping.id.GenerationStrat
 	for (idx in fields) {
 		const fieldValidate = fields[idx].fieldValidate;
 		const fieldValidateRules = fields[idx].fieldValidateRules;
-	    if (fieldValidate === true && fieldValidateRules.includes('primarykey')) {
+	    if (fieldValidate === true && fieldValidateRules.includes('primary key')) {
 	    	primarykeys = true;
 	    	break;
 	    }
@@ -125,7 +125,7 @@ _%>
 	for (idx in fields) {
 		const fieldValidate = fields[idx].fieldValidate;
 		const fieldValidateRules = fields[idx].fieldValidateRules;
-	    if (fieldValidate === true && fieldValidateRules.includes('primarykey')) {
+	    if (fieldValidate === true && fieldValidateRules.includes('primary key')) {
             primarykeys = true;
             keys.push(fields[idx]);
 	    }
@@ -189,7 +189,7 @@ public class <%= entityClass %> implements Serializable {
         } _%>
     <%- include ../common/field_validators -%>
     <%_
-        if (databaseType === 'sql' && fieldValidate === true && fieldValidateRules.includes('primarykey')) {
+        if (databaseType === 'sql' && fieldValidate === true && fieldValidateRules.includes('primary key')) {
     _%>
     @NaturalId(mutable=true)
     <%_
