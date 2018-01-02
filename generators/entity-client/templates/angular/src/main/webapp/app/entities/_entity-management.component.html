@@ -92,7 +92,7 @@
                 <%_ } else if (fieldType === 'LocalDate') { _%>
                 <td>{{<%=entityInstance %>.<%=fieldName%> | date:'mediumDate'}}</td>
                 <%_ } else if (fieldType === 'Location') { _%>
-                <td>{{<%=entityInstance %>.<%=fieldName%>.latitude}},{{<%=entityInstance %>.<%=fieldName%>.longitude}}</td>
+                <td>{{<%=entityInstance %>.<%=fieldName%>.latitude}}, {{<%=entityInstance %>.<%=fieldName%>.longitude}}</td>
                 <%_ } else { _%>
                 <td>{{<%=entityInstance %>.<%=fieldName%>}}</td>
                 <%_ } _%>
