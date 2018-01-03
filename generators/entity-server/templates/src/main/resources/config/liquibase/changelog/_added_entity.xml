@@ -168,7 +168,7 @@
         }
         if (uniqueFields !== []) {
         _%>
-        <addUniqueConstraint columnNames="<% for (idx in uniqueFields) { %> <%=uniqueFields[idx].fieldName%> <% if(idx < uniqueFields.length-1) { %>, <% } }%>"
+        <addUniqueConstraint columnNames="<% for (idx in uniqueFields) { %> <%=uniqueFields[idx].fieldNameAsDatabaseColumn%> <% if(idx < uniqueFields.length-1) { %>, <% } }%>"
                              constraintName="primary_keys_uniqueness"
                              deferrable="true"
                              disabled="true"
