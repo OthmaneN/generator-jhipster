@@ -45,6 +45,8 @@ export class <%=jhiPrefixCapitalized%>AlertErrorComponent implements OnDestroy {
         this.cleanHttpErrorListener = eventManager.subscribe('<%=angularAppName%>.httpError', (response) => {
             let i;
             const httpResponse = response.content;
+            // Miscellaneous or unknown error, status code manually set to 999
+            httpResponse.status = httpResponse.status || 999;
             switch (httpResponse.status) {
                 // connection refused, server not reachable
                 case 0:
@@ -90,6 +92,10 @@ export class <%=jhiPrefixCapitalized%>AlertErrorComponent implements OnDestroy {
 
                 case 404:
                     this.addErrorAlert('Not found', 'error.url.not.found');
+                    break;
+
+                case 999:
+                    this.addErrorAlert('Unknown error. Are you sure you respected entity constraints ?');
                     break;
 
                 default:
