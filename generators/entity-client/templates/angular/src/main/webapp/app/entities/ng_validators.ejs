@@ -49,6 +49,9 @@ if (field.fieldValidate === true) {
     if (rules.includes('pattern')) {
         validators.push('pattern="' + field.fieldValidateRulesPattern.replace(/"/g, '&#34;') + '"');
     }
+    if (rules.includes('primary key')) {
+        validators.push('primary key');
+    }
 
     result = validators.join(' ');
 }

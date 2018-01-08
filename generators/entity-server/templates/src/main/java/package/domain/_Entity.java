@@ -37,6 +37,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.*;
 <%_ } else if (databaseType === 'couchbase') { _%>
 import org.springframework.data.annotation.Id;
 import com.couchbase.client.java.repository.annotation.Field;
@@ -44,8 +45,8 @@ import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 import org.springframework.data.couchbase.core.mapping.id.IdPrefix;
 <%_ } if (databaseType === 'sql') { _%>
-
 import javax.persistence.*;
+import org.hibernate.annotations.NaturalId;
 <%_ } if (validation) { _%>
 import javax.validation.constraints.*;
 <%_ } _%>
@@ -93,6 +94,22 @@ import static org.springframework.data.couchbase.core.mapping.id.GenerationStrat
 <%_ if (databaseType === 'sql') { _%>
 @Entity
 @Table(name = "<%= entityTableName %>")
+<%_
+	let primarykeys = false;
+	for (idx in fields) {
+		const fieldValidate = fields[idx].fieldValidate;
+		const fieldValidateRules = fields[idx].fieldValidateRules;
+	    if (fieldValidate === true && fieldValidateRules.includes('primary key')) {
+	    	primarykeys = true;
+	    	break;
+	    }
+	}
+	if (primarykeys === true) {
+_%>
+/* @IdClass(<%= entityClass %>Id.class) */
+<%_
+	}
+_%>
 <%_     if (enableHibernateCache) {
             if (cacheProvider === 'infinispan') { _%>
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -102,6 +119,21 @@ import static org.springframework.data.couchbase.core.mapping.id.GenerationStrat
         }
 } if (databaseType === 'mongodb') { _%>
 @Document(collection = "<%= entityTableName %>")
+<%_
+	let primarykeys = false;
+	let keys = [];
+	for (idx in fields) {
+		const fieldValidate = fields[idx].fieldValidate;
+		const fieldValidateRules = fields[idx].fieldValidateRules;
+	    if (fieldValidate === true && fieldValidateRules.includes('primary key')) {
+            primarykeys = true;
+            keys.push(fields[idx]);
+	    }
+	}
+	if (primarykeys === true) {
+_%>
+@CompoundIndex(unique = true, def = "{<%_ for (idx in keys) { _%> '<%=keys[idx].fieldName%>': 1 <%_ if(idx < keys.length-1) { _%>, <% } } _%> }")
+<%_ } _%>
 <%_ } if (databaseType === 'couchbase') { _%>
 @Document
 <%_ } if (databaseType === 'cassandra') { _%>
@@ -156,7 +188,14 @@ public class <%= entityClass %> implements Serializable {
             required = true;
         } _%>
     <%- include ../common/field_validators -%>
-    <%_ } _%>
+    <%_
+        if (databaseType === 'sql' && fieldValidate === true && fieldValidateRules.includes('primary key')) {
+    _%>
+    @NaturalId(mutable=true)
+    <%_
+        }
+    }
+    _%>
     <%_ if (typeof fields[idx].javadoc != 'undefined') { _%>
     @ApiModelProperty(value = "<%- formatAsApiDescription(fields[idx].javadoc) %>"<% if (required) { %>, required = true<% } %>)
     <%_ } _%>

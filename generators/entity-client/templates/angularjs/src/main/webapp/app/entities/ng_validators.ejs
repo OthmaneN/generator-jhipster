@@ -49,7 +49,9 @@ if (field.fieldValidate === true) {
     if (rules.indexOf('pattern') !== -1) {
         validators.push('ng-pattern="/' + field.fieldValidateRulesPattern.replace(/"/g, '&#34;') + '/"');
     }
-
+    if (rules.indexOf('primary key') !== -1) {
+        validators.push('primary key');
+    }
     result = validators.join(' ');
 }
 -%>
