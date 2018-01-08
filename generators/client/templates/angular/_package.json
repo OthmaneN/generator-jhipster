@@ -51,8 +51,9 @@
     "webstomp-client": "1.0.6",
     <%_ } _%>
     "tether": "1.4.0",
-    "zone.js": "0.8.16"
-  },
+    "zone.js": "0.8.16",
+    "@agm/core": "latest"
+},
   "devDependencies": {
     "@angular/cli": "1.6.0",
     "@angular/compiler-cli": "5.1.0",

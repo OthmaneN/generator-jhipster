@@ -79,6 +79,10 @@ export class <%= entityAngularName %>DialogComponent implements OnInit {
         if (fieldType === 'LocalDate') { _%>
     <%= fieldName %>Dp: any;
         <%_ }
+        else if(fieldType === 'Location'){ _%>
+    <%= fieldName %>CenterLat = 0;
+    <%= fieldName %>CenterLng = 0;
+        <%_ }
     } _%>
 
     constructor(
@@ -111,6 +115,17 @@ export class <%= entityAngularName %>DialogComponent implements OnInit {
         <%_ for (idx in queries) { _%>
         <%- queries[idx] %>
         <%_ } _%>
+        if (this.<%= entityInstance %>.id !== undefined) {
+        <%_ for (idx in fields) {
+            const fieldName = fields[idx].fieldName;
+            const fieldType = fields[idx].fieldType;
+        if (fieldType === 'Location') { _%>
+        this.<%= fieldName %>CenterLat = this.<%= entityInstance %>.<%= fieldName %>.latitude;
+        this.<%= fieldName %>CenterLng = this.<%= entityInstance %>.<%= fieldName %>.longitude;
+        <%_ }
+        } _%>
+        }
+
     }
 
     <%_ if (fieldsContainBlob) { _%>
@@ -192,6 +207,16 @@ export class <%= entityAngularName %>DialogComponent implements OnInit {
         return option;
     }
     <%_ } _%>
+    <%_ for (idx in fields) {
+        const fieldName = fields[idx].fieldName;
+        const fieldType = fields[idx].fieldType;
+    if (fieldType === 'Location') { _%>
+    new<%= fieldName %>CoordinatesCallback($event) {
+        this.<%= entityInstance %>.<%= fieldName %>.latitude = $event.lat;
+        this.<%= entityInstance %>.<%= fieldName %>.longitude = $event.lng
+    }
+    <%_ }
+    } _%>
 }
 
 @Component({

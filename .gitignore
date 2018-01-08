@@ -12,3 +12,4 @@ docs
 yarn.lock
 .DS_Store
 .jhipster
+/generators/client/templates/angular/src/main/webapp/app/shared/constants/map.constants.ts

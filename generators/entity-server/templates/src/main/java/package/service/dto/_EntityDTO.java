@@ -27,6 +27,7 @@ import java.io.Serializable;<% if (fieldsContainBigDecimal === true) { %>
 import java.math.BigDecimal;<% } %><% if (fieldsContainBlob && databaseType === 'cassandra') { %>
 import java.nio.ByteBuffer;<% } %><% if (relationships.length > 0) { %>
 import java.util.HashSet;
+import <%=packageName%>.domain.Location;
 import java.util.Set;<% } %>
 import java.util.Objects;<% if (databaseType === 'cassandra') { %>
 import java.util.UUID;<% } %><% if (fieldsContainBlob && databaseType === 'sql') { %>

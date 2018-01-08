@@ -52,6 +52,8 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column><% for (idx in fields) {
             let nullable = true;
+            let isLocation = false;
+
             let primaryKey = false;
             if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primary key')) {
                 primaryKey = true;
@@ -104,8 +106,18 @@
                 } else {
                     columnType="bit";
                 }
+            } else if (fieldType === 'Location') {
+                isLocation = true;
             }
             %>
+            <%_ if (isLocation) { _%>
+            <column name="<%=columnName %>_latitude" type="double">
+            </column>
+
+            <column name="<%=columnName %>_longitude" type="double">
+            </column>
+            <%_ } else { _%>
+
             <column name="<%=columnName %>" type="<%=columnType %>">
                 <%_ if (unique) { _%>
                 <constraints nullable="<%= nullable %>" primaryKey="<%= primaryKey %>" unique="true" />
@@ -113,6 +125,7 @@
                 <constraints nullable="<%= nullable %>" primaryKey="<%= primaryKey %>" />
                 <%_ } _%>
             </column>
+                <%_ } _%>
             <%_ if (fieldType === 'byte[]' && fieldTypeBlobContent !== 'text') { _%>
             <column name="<%=columnName %>_content_type" type="varchar(255)">
                 <constraints nullable="<%= nullable %>" primaryKey="<%= primaryKey %>"/>

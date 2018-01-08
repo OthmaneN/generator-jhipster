@@ -19,6 +19,7 @@
 package <%=packageName%>.repository;
 
 import <%=packageName%>.domain.<%=entityClass%>;
+import <%=packageName%>.domain.Location;
 import org.springframework.stereotype.Repository;
 <% if (databaseType === 'cassandra') { %>
 import com.datastax.driver.core.*;
@@ -126,7 +127,8 @@ public class <%= entityClass %>Repository {
                 <%= entityInstance %>.set<%= fieldInJavaBeanMethod %>(row.get("<%= fieldName %>", <%= fields[idx].fieldType %>.class));<% } else if (fields[idx].fieldType === 'Boolean') { %>
                 <%= entityInstance %>.set<%= fieldInJavaBeanMethod %>(row.getBool("<%= fieldName %>"));<% } else if (fields[idx].fieldType === 'Text') { %>
                 <%= entityInstance %>.set<%= fieldInJavaBeanMethod %>(row.getString("<%= fieldName %>"));<% } else if (fields[idx].fieldType === 'ByteBuffer') { %>
-                <%= entityInstance %>.set<%= fieldInJavaBeanMethod %>(row.getBytes("<%= fieldName %>"));
+                <%= entityInstance %>.set<%= fieldInJavaBeanMethod %>(row.getBytes("<%= fieldName %>"));<% } else if (fields[idx].fieldType === 'Location') { %>
+                <%= entityInstance %>.getLocation().setLatitude(row.getDouble("latitude"));<%= entityInstance %>.getLocation().setLongitude(row.getDouble("longitude"));
                 <%_ if (fields[idx].fieldTypeBlobContent !== 'text') { _%>
                 <%= entityInstance %>.set<%= fieldInJavaBeanMethod %>ContentType(row.getString("<%= fieldNameUnderscored %>_content_type"));
                 <%_ } _%><% } else { %>
