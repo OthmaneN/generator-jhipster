@@ -17,6 +17,7 @@
  limitations under the License.
 -%>
 package <%=packageName%>.web.rest;
+import java.math.BigDecimal;
 <% if (databaseType === 'cassandra') { %>
 import <%=packageName%>.AbstractCassandraTest;<% } %>
 import <%=packageName%>.<%= mainClass %>;
@@ -203,8 +204,8 @@ _%>
     private static final Long <%=updatedValueName %> = <%= updatedValue %>L;
     <%_ } else if (fieldType === 'Location') { _%>
 
-    private static final Location <%=defaultValueName %> = new Location(1D,2D);
-    private static final Location <%=updatedValueName %> = new Location(3D,4D);
+    private static final Location <%=defaultValueName %> = new Location(new BigDecimal(1.0),new BigDecimal(2.0));
+    private static final Location <%=updatedValueName %> = new Location(new BigDecimal(3.0),new BigDecimal(4.0));
     <%_ } else if (fieldType === 'Float') { _%>
 
     private static final <%=fieldType %> <%=defaultValueName %> = <%= defaultValue %>F;
