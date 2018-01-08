@@ -727,6 +727,10 @@ function askForField(done) {
                     {
                         name: 'Required',
                         value: 'required'
+                    },
+                    {
+                        name: 'Primary Key',
+                        value: 'primary key'
                     }/* ,
                     {
                         name: 'Unique',
@@ -1096,6 +1100,9 @@ function logFieldsAndRelationships() {
                 }
                 if (field.fieldValidateRules.includes('maxbytes')) {
                     validationDetails.push(`maxbytes='${field.fieldValidateRulesMaxbytes}'`);
+                }
+                if (field.fieldValidateRules.includes('primary key')) {
+                    validationDetails.push('primary key');
                 }
             }
             this.log(chalk.red(field.fieldName) + chalk.white(` (${field.fieldType}${field.fieldTypeBlobContent ? ` ${field.fieldTypeBlobContent}` : ''}) `) + chalk.cyan(validationDetails.join(' ')));

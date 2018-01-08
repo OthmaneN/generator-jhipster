@@ -54,6 +54,11 @@
             let nullable = true;
             let isLocation = false;
 
+            let primaryKey = false;
+            if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primary key')) {
+                primaryKey = true;
+                nullable = false;
+            }
             if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('required')) {
                 nullable = false;
             }
@@ -115,15 +120,15 @@
 
             <column name="<%=columnName %>" type="<%=columnType %>">
                 <%_ if (unique) { _%>
-                <constraints nullable="<%= nullable %>" unique="true" />
+                <constraints nullable="<%= nullable %>" primaryKey="<%= primaryKey %>" unique="true" />
                 <%_ } else { _%>
-                <constraints nullable="<%= nullable %>" />
+                <constraints nullable="<%= nullable %>" primaryKey="<%= primaryKey %>" />
                 <%_ } _%>
             </column>
                 <%_ } _%>
             <%_ if (fieldType === 'byte[]' && fieldTypeBlobContent !== 'text') { _%>
             <column name="<%=columnName %>_content_type" type="varchar(255)">
-                <constraints nullable="<%= nullable %>" />
+                <constraints nullable="<%= nullable %>" primaryKey="<%= primaryKey %>"/>
             </column>
             <%_ }  _%>
             <%_ } _%><% for (idx in relationships) {
@@ -167,7 +172,23 @@
         </createTable>
 
         <addPrimaryKey columnNames="<%= getPluralColumnName(name) %>_id, <%= getPluralColumnName(relationshipName) %>_id" tableName="<%= joinTableName %>"/>
-        <% } %><% } %>
+        <% } %><%_ }
+        let uniqueFields = [];
+        for (idx in fields) {
+            if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('primary key')) {
+                uniqueFields.push(fields[idx]);
+            }
+        }
+        if (uniqueFields !== []) {
+        _%>
+        <addUniqueConstraint columnNames="<% for (idx in uniqueFields) { %> <%=uniqueFields[idx].fieldNameAsDatabaseColumn%> <% if(idx < uniqueFields.length-1) { %>, <% } }%>"
+                             constraintName="primary_keys_uniqueness"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             tableName="<%= entityTableName %>"/>
+        <%_ } _%>
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>
