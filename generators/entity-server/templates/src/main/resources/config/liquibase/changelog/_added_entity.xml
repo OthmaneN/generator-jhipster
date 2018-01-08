@@ -179,7 +179,7 @@
                 uniqueFields.push(fields[idx]);
             }
         }
-        if (uniqueFields !== []) {
+        if (uniqueFields.length !== 0) {
         _%>
         <addUniqueConstraint columnNames="<% for (idx in uniqueFields) { %> <%=uniqueFields[idx].fieldNameAsDatabaseColumn%> <% if(idx < uniqueFields.length-1) { %>, <% } }%>"
                              constraintName="primary_keys_uniqueness"
