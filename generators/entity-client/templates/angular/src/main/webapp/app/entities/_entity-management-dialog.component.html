@@ -110,11 +110,11 @@ _%>
                 <div class="row">
                     <div class="col-md-6">
                         <label class="form-control-label" jhiTranslate="<%= translationKey %>" for="field_<%= fieldName %>_latitude"><%= fieldNameHumanized %> latitude</label>
-                        <input id="field_<%= fieldName %>_latitude" type="number" class="form-control" name="<%= fieldName %>_latitude" [(ngModel)]="<%= entityInstance %>.<%= fieldName %>.latitude"
+                        <input id="field_<%= fieldName %>_latitude" type="number" latitude class="form-control" name="<%= fieldName %>_latitude" [(ngModel)]="<%= entityInstance %>.<%= fieldName %>.latitude"
                         <%- include ng_validators %>/>
 
                         <label class="form-control-label" jhiTranslate="<%= translationKey %>" for="field_<%= fieldName %>_longitude"><%= fieldNameHumanized %> longitude</label>
-                        <input id="field_<%= fieldName %>_longitude" type="number" class="form-control" name="<%= fieldName %>_longitude" [(ngModel)]="<%= entityInstance %>.<%= fieldName %>.longitude"
+                        <input id="field_<%= fieldName %>_longitude" type="number" longitude class="form-control" name="<%= fieldName %>_longitude" [(ngModel)]="<%= entityInstance %>.<%= fieldName %>.longitude"
                         <%- include ng_validators %>/>
                     </div>
                     <div class="col-md-6">

@@ -47,6 +47,9 @@ import {
     <%_ } _%>
 } from './';
 
+import {LatitudeValidatorDirective} from '../../shared/validators/latitude-validator';
+import {LongitudeValidatorDirective} from '../../shared/validators/longitude-validator';
+
 const ENTITY_STATES = [
     ...<%= entityInstance %>Route,
     ...<%= entityInstance %>PopupRoute,
@@ -75,6 +78,8 @@ const ENTITY_STATES = [
         <%= entityAngularName %>DeleteDialogComponent,
         <%= entityAngularName %>PopupComponent,
         <%= entityAngularName %>DeletePopupComponent,
+        LatitudeValidatorDirective,
+        LongitudeValidatorDirective
     ],
     entryComponents: [
         <%= entityAngularName %>Component,
