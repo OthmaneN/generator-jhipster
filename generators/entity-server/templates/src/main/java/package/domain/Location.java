@@ -3,12 +3,18 @@ package <%=packageName%>.domain;
 import java.lang.Comparable;
 import javax.persistence.*;
 import java.util.Objects;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Embeddable
 public class Location implements Comparable<Location>{
+    @Min(-180)
+    @Max(180)
     @Column(name="longitude")
     private double longitude;
 
+    @Min(-90)
+    @Max(90)
     @Column(name="latitude")
     private double latitude;
 

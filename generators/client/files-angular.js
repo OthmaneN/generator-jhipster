@@ -394,7 +394,10 @@ const files = {
                 'shared/login/_login.service.ts',
                 // alert service code
                 'shared/alert/_alert.component.ts',
-                'shared/alert/_alert-error.component.ts'
+                'shared/alert/_alert-error.component.ts',
+                // latitude and longitude validators
+                'shared/validators/latitude-validator.ts',
+                'shared/validators/longitude-validator.ts',
             ]
         },
         {
