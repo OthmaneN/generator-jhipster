@@ -3,42 +3,43 @@ package <%=packageName%>.domain;
 import java.lang.Comparable;
 import javax.persistence.*;
 import java.util.Objects;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import java.math.BigDecimal;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 
 @Embeddable
 public class Location implements Comparable<Location>{
-    @Min(-180)
-    @Max(180)
+    @DecimalMax("-180.0")
+    @DecimalMin("180.0")
     @Column(name="longitude")
-    private double longitude;
+    private BigDecimal longitude;
 
-    @Min(-90)
-    @Max(90)
+    @DecimalMax("90.0")
+    @DecimalMin("-90.0")
     @Column(name="latitude")
-    private double latitude;
+    private BigDecimal latitude;
 
     public Location() {
     }
 
-    public Location(double longitude, double latitude) {
+    public Location(BigDecimal longitude, BigDecimal latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
@@ -52,8 +53,8 @@ public class Location implements Comparable<Location>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Location location = (Location) o;
-        return Double.compare(location.longitude, longitude) == 0 &&
-            Double.compare(location.latitude, latitude) == 0;
+        return location.longitude.equals(longitude) &&
+            location.latitude.equals(latitude);
     }
 
     @Override
